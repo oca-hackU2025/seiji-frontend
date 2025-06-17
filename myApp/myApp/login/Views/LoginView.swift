@@ -57,5 +57,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    RegisterView(selection: .constant(0))
+    LoginView(selection: .constant(0))
 }
