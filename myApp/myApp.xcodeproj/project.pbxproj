@@ -16,7 +16,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		B1A153BC2DFE8F5900825C18 /* myApp */ = {
+		1F70E6A42E0172A8008A1B9C /* myApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = myApp;
 			sourceTree = "<group>";
@@ -39,8 +39,8 @@
 		B1A153B12DFE8F5900825C18 = {
 			isa = PBXGroup;
 			children = (
-				B1A153BC2DFE8F5900825C18 /* myApp */,
 				B1A153BB2DFE8F5900825C18 /* Products */,
+				1F70E6A42E0172A8008A1B9C /* myApp */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,7 +68,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B1A153BC2DFE8F5900825C18 /* myApp */,
+				1F70E6A42E0172A8008A1B9C /* myApp */,
 			);
 			name = myApp;
 			packageProductDependencies = (
