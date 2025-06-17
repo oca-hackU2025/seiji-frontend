@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B141A9B22DFFF0E000D40230 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B141A9B12DFFF0E000D40230 /* FirebaseAuth */; };
+		B141A9F32E0128C100D40230 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = B141A9F22E0128C100D40230 /* FirebaseCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B141A9F32E0128C100D40230 /* FirebaseCore in Frameworks */,
 				B141A9B22DFFF0E000D40230 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -71,6 +73,7 @@
 			name = myApp;
 			packageProductDependencies = (
 				B141A9B12DFFF0E000D40230 /* FirebaseAuth */,
+				B141A9F22E0128C100D40230 /* FirebaseCore */,
 			);
 			productName = myApp;
 			productReference = B1A153BA2DFE8F5900825C18 /* myApp.app */;
@@ -346,6 +349,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B141A9B02DFFF0E000D40230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		B141A9F22E0128C100D40230 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B141A9B02DFFF0E000D40230 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
