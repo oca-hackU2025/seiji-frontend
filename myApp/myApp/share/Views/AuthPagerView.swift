@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct AuthPagerView: View {
-    @State private var selection: Int = 0
+    enum AuthPage: Int {
+        case login = 0
+        case register = 1
+    }
+    
+    @State private var selection: AuthPage = .login
     
     var body: some View {
         TabView(selection: $selection) {
             LoginView(selection: $selection)
-                .tag(0)
+                .tag(AuthPage.login)
             RegisterView(selection: $selection)
-                .tag(1)
+                .tag(AuthPage.register)
         }
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
     }
