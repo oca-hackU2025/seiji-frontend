@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var email: String = ""
-    @State var password: String = ""
+    @Binding var selection: Int
+    @State private var email: String = ""
+    @State private var password: String = ""
     
     var body: some View {
         VStack(spacing: 16) {
@@ -36,12 +37,13 @@ struct LoginView: View {
                         .background(!email.isEmpty && !password.isEmpty ? Color.blue : Color.gray)
                         .cornerRadius(8)
                 }
-                .disabled(!email.isEmpty && !password.isEmpty)
-                Button(action: handleLogin) {
-                    Text("アカウントをお持ちでない方")
-                        .font(.subheadline)
-                        .foregroundStyle(.blue)
+                .disabled(email.isEmpty || password.isEmpty)
+                
+                Button("アカウントをお持ちでない方") {
+                    selection = 1
                 }
+                .font(.subheadline)
+                .foregroundStyle(.blue)
             }
             .padding(.bottom, 32)
         }
@@ -50,14 +52,10 @@ struct LoginView: View {
     }
     
     private func handleLogin() {
-        // ログインよろしくまおと
-    }
-    
-    private func handleRegister() {
-        // Registerに移動するのを後々書く
+        // ログイン処理
     }
 }
 
 #Preview {
-    LoginView()
+    RegisterView(selection: .constant(0))
 }
