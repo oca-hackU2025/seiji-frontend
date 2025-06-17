@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-
 struct RegisterView: View {
+    @Binding var selection: Int
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var passwordConfirm: String = ""
@@ -24,18 +24,19 @@ struct RegisterView: View {
     var body: some View {
         VStack(spacing: 16) {
             VStack(spacing: 16) {
-                CustomTextField (
+                CustomTextField(
                     placeholder: "メールアドレス",
                     text: $email
                 )
-                CustomSecureField (
+                CustomSecureField(
                     placeholder: "パスワード",
                     text: $password
                 )
-                CustomSecureField (
+                CustomSecureField(
                     placeholder: "パスワード確認",
                     text: $passwordConfirm
                 )
+                
                 if !passwordConfirm.isEmpty && !passwordsMatch {
                     Text("パスワードが一致しません")
                         .foregroundStyle(.red)
@@ -57,11 +58,12 @@ struct RegisterView: View {
                         .cornerRadius(8)
                 }
                 .disabled(!isFormValid)
-                Button(action: handleLogin) {
-                    Text("すでにアカウントをお持ちの方")
-                        .font(.subheadline)
-                        .foregroundStyle(.blue)
+                
+                Button("すでにアカウントをお持ちの方") {
+                    selection = 0
                 }
+                .font(.subheadline)
+                .foregroundStyle(.blue)
             }
             .padding(.bottom, 32)
         }
@@ -70,14 +72,10 @@ struct RegisterView: View {
     }
     
     private func handleRegister() {
-        // 登録処理よろしくまおと
-    }
-    
-    private func handleLogin() {
-        // ログイン画面に移動するのを後々書く
+        // 登録処理
     }
 }
 
 #Preview {
-    RegisterView()
+    RegisterView(selection: .constant(1))
 }
