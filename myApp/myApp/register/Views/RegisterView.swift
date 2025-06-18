@@ -9,37 +9,30 @@ import SwiftUI
 
 struct RegisterView: View {
     @Binding var selection: Int
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var passwordConfirm: String = ""
-    
-    private var passwordsMatch: Bool {
-        password == passwordConfirm && !passwordConfirm.isEmpty
-    }
-    
-    private var isFormValid: Bool {
-        !email.isEmpty && !password.isEmpty && !passwordConfirm.isEmpty && passwordsMatch
-    }
+    @StateObject private var registerViewModel = RegisterViewModel()
     
     var body: some View {
         VStack(spacing: 16) {
             VStack(spacing: 16) {
                 CustomTextField(
                     placeholder: "メールアドレス",
-                    text: $email
+                    text: $registerViewModel.email
                 )
+                .textInputAutocapitalization(.never)
                 CustomSecureField(
                     placeholder: "パスワード",
-                    text: $password
+                    text: $registerViewModel.password
                 )
+                .textInputAutocapitalization(.never)
                 CustomSecureField(
                     placeholder: "パスワード確認",
-                    text: $passwordConfirm
+                    text: $registerViewModel.passwordConfirm
                 )
+                .textInputAutocapitalization(.never)
                 
-                if !passwordConfirm.isEmpty && !passwordsMatch {
-                    Text("パスワードが一致しません")
-                        .foregroundStyle(.red)
+                if registerViewModel.message != "" {
+                    Text(registerViewModel.message)
+                        .foregroundStyle(registerViewModel.isSuccess ? .green : .red)
                         .font(.caption)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -48,16 +41,16 @@ struct RegisterView: View {
             Spacer()
             
             VStack(spacing: 16) {
-                Button(action: handleRegister) {
-                    Text("新規登録")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(isFormValid ? Color.blue : Color.gray)
-                        .cornerRadius(8)
+                Button("新規登録") {
+                    registerViewModel.register()
                 }
-                .disabled(!isFormValid)
+                .font(.headline)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(!registerViewModel.isSubmit || registerViewModel.isLoading ? Color.gray : Color.blue)
+                .cornerRadius(8)
+                .disabled(!registerViewModel.isSubmit || registerViewModel.isLoading)
                 
                 Button("すでにアカウントをお持ちの方") {
                     selection = 0
@@ -69,10 +62,6 @@ struct RegisterView: View {
         }
         .padding(.horizontal, 20)
         .padding(.top, 32)
-    }
-    
-    private func handleRegister() {
-        // 登録処理
     }
 }
 
