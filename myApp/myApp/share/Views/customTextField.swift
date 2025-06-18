@@ -27,26 +27,26 @@ struct CustomSecureField: View {
     @State private var isSecured: Bool = true
     
     var body: some View {
-        HStack{
-            if isSecured {
-                SecureField(placeholder, text: $text)
-                    .textFieldStyle(.plain)
-            } else {
-                TextField(placeholder, text: $text)
-                    .textFieldStyle(.plain)
+        ZStack(alignment: .trailing) {
+            Group {
+                if isSecured {
+                    SecureField(placeholder, text: $text)
+                } else {
+                    TextField(placeholder, text: $text)
+                }
             }
-            
+            .padding(.trailing, 32) // アイコン分の余白
+
             Button(action: {
                 isSecured.toggle()
             }) {
                 Image(systemName: isSecured ? "eye.slash" : "eye")
                     .foregroundColor(.gray)
-                    .frame(width: 20, height: 20)
             }
+            .padding(.trailing, 8)
         }
         .padding(12)
         .background(Color(UIColor.systemFill))
         .cornerRadius(8)
-        .frame(maxWidth: .infinity)
     }
 }

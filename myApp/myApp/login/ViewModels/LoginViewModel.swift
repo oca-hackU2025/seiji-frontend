@@ -33,28 +33,47 @@ class LoginViewModel: ObservableObject {
                     self.isLoading = false
                 }
             } else if let user = result?.user {
-                user.sendEmailVerification { error in
-                    DispatchQueue.main.async {
-                        if let error = error {
-                            self.message = "エラー"
+                user.getIDToken(completion: { token, error in
+                    if let error = error {
+                        DispatchQueue.main.async {
+                            self.message = "トークン取得エラー"
                             print(error.localizedDescription)
-                        } else {
-                            self.message = "ログイン成功"
-                            self.email = ""
-                            self.password = ""
-                            self.isSuccess = true
+                            self.isLoading = false
                         }
-                        self.isLoading = false
+                        return
                     }
-                }
+                    
+                    guard let token = token else {
+                        DispatchQueue.main.async {
+                            self.message = "トークンが空です。"
+                            self.isLoading = false
+                        }
+                        return
+                    }
+                    AuthService.sendTokenToBackend(token) { result in
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            switch result {
+                            case .success:
+                                self.message = "ログイン成功"
+                                self.email = ""
+                                self.password = ""
+                                self.isSuccess = true
+                                print(self.message)
+                            case .failure(let error):
+                                self.message = "通信エラー: \(error.localizedDescription)"
+                                print(self.message)
+                            }
+                        }
+                    }
+                })
+                
             } else {
                 DispatchQueue.main.async {
                     self.message = "予期しないエラーが発生しました。"
-                    print("予期しないエラーが発生しました。")
                     self.isLoading = false
                 }
             }
         }
     }
- 
 }

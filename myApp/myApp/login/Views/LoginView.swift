@@ -48,10 +48,6 @@ struct LoginView: View {
         .padding(.horizontal, 20)
         .padding(.top, 32)
     }
-    
-    private func handleLogin() {
-        // ログイン処理
-    }
 }
 
 #Preview {
