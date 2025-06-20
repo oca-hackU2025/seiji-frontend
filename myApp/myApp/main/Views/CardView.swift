@@ -105,6 +105,7 @@ extension CardView {
                 .frame(maxWidth: .infinity, maxHeight: 550)
                 .padding(.top, 10)
                 .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 0))
             
             naviagtionBar
             
@@ -142,11 +143,11 @@ extension CardView {
                     .animation(.easeInOut(duration: 0.3), value: currentDisplayIndex)
             }
         }
-        .padding(.horizontal, 8)
+        .frame(width: 250)
         .padding(.vertical, 2)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color(red: 0.94, green: 0.94, blue: 0.96))
+                .fill(Color(red: 0.94, green: 0.94, blue: 0.96).opacity(0.3))
         )
         .padding(.horizontal, 32)
         .padding(.top, 17)

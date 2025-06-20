@@ -29,7 +29,6 @@ struct ListView: View {
 }
 
 extension ListView {
-    
     private var cards: some View {
         ZStack {
             ForEach(viewModel.users.reversed()) { user in
