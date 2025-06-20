@@ -1,5 +1,5 @@
 //
-//  LikeViewModel.swift
+//  LikeService.swift
 //  myApp
 //
 //  Created by kmjak on 2025/06/20.
