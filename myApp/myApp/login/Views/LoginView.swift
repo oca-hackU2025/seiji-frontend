@@ -44,6 +44,17 @@ struct LoginView: View {
                 .foregroundStyle(.blue)
             }
             .padding(.bottom, 32)
+            Button("test") {
+                PoliticianService.generatePolitician { result in
+                    switch result {
+                    case .success():
+                        print("政治家生成成功！")
+                        print(result)
+                    case .failure(let error):
+                        print("エラーが発生しました: \(error.localizedDescription)")
+                    }
+                }
+            }
         }
         .padding(.horizontal, 20)
         .padding(.top, 32)
