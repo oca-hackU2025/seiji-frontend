@@ -39,7 +39,7 @@ struct CardView: View {
             // Infomation
             informationLayer
         }
-        .background(Color(UIColor.systemGray6))
+        .background(Color(red: 0.94, green: 0.94, blue: 0.96))
         .overlay(
             // Like and Nope
             LikeAndNope,
@@ -98,31 +98,59 @@ struct CardView: View {
 extension CardView {
     
     private var posterLayer: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Image(getImageName(for: displayTypes[currentDisplayIndex]))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: .infinity, maxHeight: 450)
+                .frame(maxWidth: .infinity, maxHeight: 550)
                 .padding(.top, 10)
                 .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 0))
+            
+            naviagtionBar
             
             HStack(spacing: 0) {
                 // 左側タップエリア
-                Color.clear
+                Rectangle()
+                    .fill(Color.clear)
+                    .contentShape(Rectangle())  // タップ領域を明確化
                     .onTapGesture {
-                        withAnimation(.easeInOut(duration:  0.3)) {
+                        print("左タップ: \(currentDisplayIndex)")  // デバッグ用
+                        withAnimation(.easeInOut(duration: 0.3)) {
                             currentDisplayIndex = max(0, currentDisplayIndex - 1)
                         }
                     }
                 // 右側タップエリア
-                Color.clear
+                Rectangle()
+                    .fill(Color.clear)
+                    .contentShape(Rectangle())  // タップ領域を明確化
                     .onTapGesture {
+                        print("右タップ: \(currentDisplayIndex)")  // デバッグ用
                         withAnimation(.easeInOut(duration: 0.3)) {
                             currentDisplayIndex = min(displayTypes.count - 1, currentDisplayIndex + 1)
                         }
                     }
             }
         }
+    }
+    
+    private var naviagtionBar: some View {
+        HStack(spacing: 4) {
+            ForEach(0..<displayTypes.count, id: \.self) { index in
+                RoundedRectangle(cornerRadius: 2)
+                    .fill(index == currentDisplayIndex ? Color.white : Color.white.opacity(0.3))
+                    .frame(height: 3)
+                    .animation(.easeInOut(duration: 0.3), value: currentDisplayIndex)
+            }
+        }
+        .frame(width: 250)
+        .padding(.vertical, 2)
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .fill(Color(red: 0.94, green: 0.94, blue: 0.96).opacity(0.3))
+        )
+        .padding(.horizontal, 32)
+        .padding(.top, 17)
     }
     
     private var informationLayer: some View {
@@ -172,7 +200,7 @@ extension CardView {
         .foregroundStyle(.black)
         .frame(maxWidth: .infinity, alignment: .center)
         .padding()
-        .background(Color(UIColor.systemGray6))
+        .background(Color(red: 0.94, green: 0.94, blue: 0.96))
     }
     
     
