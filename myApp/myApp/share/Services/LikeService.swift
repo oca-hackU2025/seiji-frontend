@@ -9,7 +9,7 @@ import Foundation
 
 struct LikeService {
     static func sendLike(politicianId: Int, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let url = URL(string: "http://localhost:8080/api/likes") else {
+        guard let url = URL(string: "http://localhost:8080/api/private/likes") else {
             completion(.failure(LikeServiceError.invalidURL))
             return
         }

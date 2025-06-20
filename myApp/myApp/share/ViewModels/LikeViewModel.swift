@@ -24,6 +24,7 @@ final class LikeViewModel: ObservableObject {
                 case .failure(let error):
                     self.message = "エラーが発生しました"
                     self.isSuccess = false
+                    print(error)
                 }
             }
         }
