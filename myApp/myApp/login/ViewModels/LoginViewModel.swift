@@ -20,7 +20,7 @@ class LoginViewModel: ObservableObject {
         !email.isEmpty && !password.isEmpty
     }
 
-    func login() {
+    func login(authManager: AuthManager) {
         guard isSubmit else { return }
 
         isLoading = true
@@ -73,6 +73,10 @@ class LoginViewModel: ObservableObject {
                             self.password = ""
                             self.isSuccess = saved
                             
+                            if saved {
+                                authManager.login()
+                            }
+                            
                         case .failure(let error):
                             self.message = "通信エラー: \(error.localizedDescription)"
                         }
@@ -82,8 +86,8 @@ class LoginViewModel: ObservableObject {
         }
     }
 
-    func logout() {
-        KeychainHelper.delete()
+    func logout(authManager: AuthManager) {
+        authManager.logout()
         email = ""
         password = ""
         isSuccess = false
