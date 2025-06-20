@@ -10,6 +10,7 @@ import SwiftUI
 struct LoginView: View {
     @Binding var selection: Int
     @StateObject var loginViewModel = LoginViewModel()
+    @EnvironmentObject var authManager: AuthManager // AuthManagerを取得
     
     var body: some View {
         VStack(spacing: 16) {
@@ -20,14 +21,22 @@ struct LoginView: View {
                 )
                 CustomSecureField(
                     placeholder: "パスワード",
-                    text: $loginViewModel.password                )
+                    text: $loginViewModel.password
+                )
+                
+                if loginViewModel.message != "" {
+                    Text(loginViewModel.message)
+                        .foregroundStyle(loginViewModel.isSuccess ? .green : .red)
+                        .font(.caption)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
             
             Spacer()
             
             VStack(spacing: 16) {
                 Button("ログイン") {
-                    loginViewModel.login()
+                    loginViewModel.login(authManager: authManager)
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -48,8 +57,4 @@ struct LoginView: View {
         .padding(.horizontal, 20)
         .padding(.top, 32)
     }
-}
-
-#Preview {
-    LoginView(selection: .constant(0))
 }

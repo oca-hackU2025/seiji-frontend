@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListView: View {
-    
+    @EnvironmentObject var authManager: AuthManager
     private let viewModel = ListViewModel()
     
     var body: some View {
