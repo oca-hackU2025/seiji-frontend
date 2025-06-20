@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @State private var selectedTab: Int = 0
+    @StateObject private var likeViewModel = LikeViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -25,8 +26,10 @@ struct MainView: View {
             Group {
                 if selectedTab == 0 {
                     ListView()
+                        .environmentObject(likeViewModel)
                 } else {
                     LikesView()
+                        .environmentObject(likeViewModel)
                 }
             }
             

@@ -14,9 +14,9 @@ enum Action: CaseIterable {
 }
 
 extension Action {
-    func createActionButton(viewModel: ListViewModel) -> some View {
+    func createActionButton(viewModel: ListViewModel, likeViewModel: LikeViewModel) -> some View {
         Button {
-            viewModel.tappedhandler(action: self)
+            viewModel.tappedhandler(action: self, likeViewModel: likeViewModel)
         } label: {
             Image(systemName: self.symbol)
                 .font(.system(size: 26, weight: .bold))
