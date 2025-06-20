@@ -9,35 +9,33 @@ import SwiftUI
 
 struct LoginView: View {
     @Binding var selection: Int
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @StateObject var loginViewModel = LoginViewModel()
     
     var body: some View {
         VStack(spacing: 16) {
             VStack(spacing: 16) {
                 CustomTextField(
                     placeholder: "メールアドレス",
-                    text: $email
+                    text: $loginViewModel.email
                 )
                 CustomSecureField(
                     placeholder: "パスワード",
-                    text: $password
-                )
+                    text: $loginViewModel.password                )
             }
             
             Spacer()
             
             VStack(spacing: 16) {
-                Button(action: handleLogin) {
-                    Text("ログイン")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(!email.isEmpty && !password.isEmpty ? Color.blue : Color.gray)
-                        .cornerRadius(8)
+                Button("ログイン") {
+                    loginViewModel.login()
                 }
-                .disabled(email.isEmpty || password.isEmpty)
+                .font(.headline)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(!loginViewModel.isSubmit || loginViewModel.isLoading ? Color.gray : Color.blue)
+                .cornerRadius(8)
+                .disabled(!loginViewModel.isSubmit || loginViewModel.isLoading)
                 
                 Button("アカウントをお持ちでない方") {
                     selection = 1
@@ -49,10 +47,7 @@ struct LoginView: View {
         }
         .padding(.horizontal, 20)
         .padding(.top, 32)
-    }
-    
-    private func handleLogin() {
-        // ログイン処理
+        
     }
 }
 

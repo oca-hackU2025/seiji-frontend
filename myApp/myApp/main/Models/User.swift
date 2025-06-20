@@ -6,8 +6,7 @@
 //
 
 import Foundation
-
-struct User: Identifiable {
+struct User: Identifiable, Codable {
     let id: String
     let name: String
     let furigana: String
@@ -16,9 +15,45 @@ struct User: Identifiable {
     var mbti: Mbti
     var poster: String
     var slogan: String
-}
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case furigana = "name_furigana"
+        case age
+        case party = "party_name"
+        case poster = "main_img"
+        case slogan = "catch_phrase"
+    }
 
-enum Mbti: String, CaseIterable {
+    init(id: String, name: String, furigana: String, age: Int, party: String, mbti: Mbti, poster: String, slogan: String) {
+        self.id = id
+        self.name = name
+        self.furigana = furigana
+        self.age = age
+        self.party = party
+        self.mbti = mbti
+        self.poster = poster
+        self.slogan = slogan
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let intId = try container.decode(Int.self, forKey: .id)
+        self.id = String(intId)
+        
+        self.name = try container.decode(String.self, forKey: .name)
+        self.furigana = try container.decode(String.self, forKey: .furigana)
+        self.age = try container.decode(Int.self, forKey: .age)
+        self.party = try container.decode(String.self, forKey: .party)
+        self.poster = try container.decode(String.self, forKey: .poster)
+        self.slogan = try container.decode(String.self, forKey: .slogan)
+        
+        self.mbti = .entp
+    }
+}
+enum Mbti: String, CaseIterable, Codable {
     case istj = "ISTJ"
     case istp = "ISTP"
     case isfj = "ISFJ"
