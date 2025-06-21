@@ -175,14 +175,14 @@ extension CardView {
                 // 左右に分ける
                 Spacer()
                 
-                // 政党と立場
+                // 政党とMBTI
                 VStack(alignment: .trailing) {
-                    // 立場
+                    // MBTI
                     Text(user.mbti.rawValue)
                         .font(.headline.bold())
                         .foregroundStyle(.white)
                         .padding(.horizontal, 8)
-                        .background(.blue)
+                        .background(user.mbti.backgroundColor)
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                     // 政党
                     Text(user.party)
