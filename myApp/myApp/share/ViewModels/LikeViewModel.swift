@@ -19,9 +19,6 @@ final class LikeViewModel: ObservableObject {
         User.MOCK_USER2,
         User.MOCK_USER3,
         User.MOCK_USER4,
-        User.MOCK_USER5,
-        User.MOCK_USER6,
-        User.MOCK_USER7
     ]
     
     init() {

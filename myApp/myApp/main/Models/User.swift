@@ -96,9 +96,6 @@ extension User {
     static let MOCK_USER2 = User(id: "2", name: "川村あやか", furigana: "かわむらあやか", age: 38, party: "市民の声ネット", mbti: .esfp, poster: "poster_2", slogan: "誰一人、取り残さない政治")
     static let MOCK_USER3 = User(id: "3", name: "大河原理人", furigana: "おおがわらまさと", age: 39, party: "インパクト維新党", mbti: .enfp, poster: "poster_3", slogan: "未来は俺に任せろ！")
     static let MOCK_USER4 = User(id: "4", name: "田中剛志", furigana: "たなかつよし", age: 78, party: "国民安全党", mbti: .istj, poster: "poster_4", slogan: "守るべきものがある")
-    static let MOCK_USER5 = User(id: "5", name: "高橋健一", furigana: "たかはしけんいち", age: 61, party: "伝統保守", mbti: .istj, poster: "poster_5", slogan: "経験と実績で安心できる街づくり")
-    static let MOCK_USER6 = User(id: "6", name: "渡辺あゆみ", furigana: "わたなべあゆみ", age: 34, party: "環境第一", mbti: .istp, poster: "poster_6", slogan: "持続可能な社会を次世代に")
-    static let MOCK_USER7 = User(id: "7", name: "小林正雄", furigana: "こばやしまさお", age: 47, party: "都市開発", mbti: .estp, poster: "poster_7", slogan: "インフラ整備で便利な街へ")
 }
 
 
