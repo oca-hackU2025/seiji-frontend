@@ -45,11 +45,17 @@ class ListViewModel {
         ])
     }
     
-    func likeButtonTapped() {
+    func likeButtonTapped(likeViewModel: LikeViewModel) {
         if currentIndex >= users.count { return }
         
+        let currentUser = users[currentIndex]
+        
+        if let userId = Int(currentUser.id) {
+            likeViewModel.sendLike(seijikaId: userId)
+        }
+        
         NotificationCenter.default.post(name: Notification.Name("LIKEACTION"), object: nil, userInfo: [
-            "id": users[currentIndex].id
+            "id": currentUser.id
         ])
     }
     
@@ -61,12 +67,19 @@ class ListViewModel {
         ])
     }
     
-    func tappedhandler(action: Action) {
+    func tappedhandler(action: Action, likeViewModel: LikeViewModel) {
         switch action {
         case .nope, .like:
             if currentIndex >= users.count { return }
         case .redo:
             if currentIndex <= 0 { return }
+        }
+        
+        if action == .like && currentIndex < users.count {
+            let currentUser = users[currentIndex]
+            if let userId = Int(currentUser.id) {
+                likeViewModel.sendLike(seijikaId: userId)
+            }
         }
         
         NotificationCenter.default.post(name: Notification.Name("ACTIONFROMBUTTON"), object: nil, userInfo: [

@@ -8,12 +8,7 @@
 import SwiftUI
 
 struct LikesView: View {
-    // 一時的に全ユーザーを取得
-    private let likeUsers = [
-        User.MOCK_USER1,
-        User.MOCK_USER3
-    ]
-    
+    @StateObject private var likeViewModel = LikeViewModel()
     @State private var selectedUser: User? = nil
     @State private var isModalPresented: Bool = false
     
@@ -22,16 +17,40 @@ struct LikesView: View {
             // HeaderText
             headerText
             
-            // Grid
-            likesGrid
-            
-            Spacer()
+            // Loading状態
+            if likeViewModel.isLoading {
+                Spacer()
+                ProgressView("読み込み中...")
+                Spacer()
+            } else if likeViewModel.likedUsers.isEmpty {
+                // いいねしたユーザーがいない場合
+                Spacer()
+                VStack(spacing: 16) {
+                    Image(systemName: "heart.slash")
+                        .font(.system(size: 50))
+                        .foregroundColor(.gray)
+                    Text("いいねしたユーザーはいません")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                }
+                Spacer()
+            } else {
+                // Grid
+                likesGrid
+                Spacer()
+            }
         }
         .background(.white)
         .overlay(
             // モーダル表示
             modalOverlay
         )
+        .onAppear {
+            likeViewModel.fetchLikedUsers()
+        }
+        .refreshable {
+            likeViewModel.fetchLikedUsers()
+        }
     }
 }
 
@@ -47,6 +66,15 @@ extension LikesView {
                 .foregroundStyle(.black)
             
             Spacer()
+            
+            // 更新ボタン
+            Button(action: {
+                likeViewModel.fetchLikedUsers()
+            }) {
+                Image(systemName: "arrow.clockwise")
+                    .font(.title3)
+                    .foregroundColor(.blue)
+            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
@@ -55,7 +83,7 @@ extension LikesView {
     private var likesGrid: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 2), spacing: 8) {
-                ForEach(likeUsers) { user in
+                ForEach(likeViewModel.likedUsers) { user in
                     posterCard(user: user)
                 }
             }
@@ -75,6 +103,25 @@ extension LikesView {
                 .frame(height: 250)
                 .clipped()
                 .clipShape(RoundedRectangle(cornerRadius: 12))
+                .overlay(
+                    // いいねマーク
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Image(systemName: "heart.fill")
+                                .font(.title2)
+                                .foregroundColor(.red)
+                                .background(
+                                    Circle()
+                                        .fill(.white)
+                                        .frame(width: 30, height: 30)
+                                )
+                        }
+                        Spacer()
+                    }
+                    .padding(8),
+                    alignment: .topTrailing
+                )
         }
     }
     
@@ -91,7 +138,7 @@ extension LikesView {
                     }
                 
                 CardView(user: user) { _ in
-                // 何もしない(Redoは無効)
+                    // 何もしない(Redoは無効)
                 }
                 .scaleEffect(0.9)
                 .onTapGesture {

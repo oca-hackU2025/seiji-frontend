@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ListView: View {
-    
+    @EnvironmentObject var authManager: AuthManager
+    @StateObject private var likeViewModel = LikeViewModel()
     private let viewModel = ListViewModel()
     
     var body: some View {
@@ -21,6 +22,7 @@ struct ListView: View {
         }
         .background(.white, in: RoundedRectangle(cornerRadius: 15))
         .padding(.horizontal, 6)
+        .environmentObject(likeViewModel)
     }
 }
 
@@ -35,6 +37,7 @@ extension ListView {
                 CardView(user: user) { isRedo in
                     viewModel.adjustIndex(isRedo: isRedo)
                 }
+                .environmentObject(likeViewModel)
             }
         }
     }
@@ -42,11 +45,10 @@ extension ListView {
     private var actions: some View {
         HStack(spacing: 68) {
             ForEach(Action.allCases, id: \.self) { type in
-                type.createActionButton(viewModel: viewModel)
+                type.createActionButton(viewModel: viewModel, likeViewModel: likeViewModel)
             }
         }
         .foregroundStyle(.white)
         .frame(height: 80)
     }
 }
-
