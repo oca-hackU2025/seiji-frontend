@@ -10,16 +10,26 @@ import SwiftUI
 // MARK: - Header
 struct AppHeaderView: View {
     @EnvironmentObject var authManager: AuthManager
+    @State private var isLoggingOut = false
+    
     var body: some View {
-        HStack{
+        HStack {
             Image("PoliLink_logo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 40)
             
             Spacer()
-            Button("ログアウト"){
+            
+            Button(action: {
+                isLoggingOut = true
                 authManager.logout()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    isLoggingOut = false
+                }
+            }) {
+                Text("ログアウト")
+                    .opacity(isLoggingOut ? 0.5 : 1.0)
             }
         }
         .padding(.horizontal, 16)
