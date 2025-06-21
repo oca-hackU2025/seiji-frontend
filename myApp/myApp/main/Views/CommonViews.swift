@@ -9,6 +9,7 @@ import SwiftUI
 
 // MARK: - Header
 struct AppHeaderView: View {
+    @EnvironmentObject var authManager: AuthManager
     var body: some View {
         HStack{
             Image("PoliLink_logo")
@@ -17,6 +18,9 @@ struct AppHeaderView: View {
                 .frame(height: 40)
             
             Spacer()
+            Button("ログアウト"){
+                authManager.logout()
+            }
         }
         .padding(.horizontal, 16)
         .background(.white)
